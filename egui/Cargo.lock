@@ -493,17 +493,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1fdabc7756949593fe60f30ec81974b613357de856987752631dea1e3394c80"
 
 [[package]]
-name = "bevy-egui-playground"
-version = "0.1.0"
-dependencies = [
- "cli-clipboard",
- "eframe",
- "egui",
- "egui_extras",
- "env_logger",
-]
-
-[[package]]
 name = "bit-set"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1768,6 +1757,17 @@ name = "jni-sys"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8eaf4bc02d17cbdd7ff4c7438cafcdf7fb9a4613313ad11b4f8fefe7d3fa0130"
+
+[[package]]
+name = "job-tool"
+version = "0.1.0"
+dependencies = [
+ "cli-clipboard",
+ "eframe",
+ "egui",
+ "egui_extras",
+ "env_logger",
+]
 
 [[package]]
 name = "jobserver"

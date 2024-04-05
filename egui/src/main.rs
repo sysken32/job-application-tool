@@ -1,14 +1,13 @@
+#![windows_subsystem = "windows"]
+
 use eframe;
 use cli_clipboard::{ClipboardContext, ClipboardProvider};
-use std:: {process::Command};
+use std::process::Command;
 
 fn main() -> Result<(), eframe::Error> {
-    
-    let _v: Vec<String> = Vec::new();
-
     env_logger::init();
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
+        viewport: egui::ViewportBuilder::default().with_inner_size([520.0, 240.0]),
         ..Default::default()
     };
     eframe::run_native(
@@ -23,15 +22,16 @@ fn main() -> Result<(), eframe::Error> {
 
 //app functionality
 struct MyApp {
-    v: Vec<String>,
+    // v: Vec<String>,
     label_text: String,
+    url: String,
 }
 
 impl Default for MyApp {
     fn default() -> Self {
         Self {
-            v: Vec::new(),
-            label_text: String::from("Default"),
+            label_text: String::from(""),
+            url: String::new(),
         }
     }
 }
@@ -41,8 +41,12 @@ impl eframe::App for MyApp {
         egui::CentralPanel::default().show(ctx, |ui|{
             ui.vertical_centered(|ui| {
                 ui.heading("Job Applier App");
+                //working on section here
+                let url_label = ui.label("Paste your linkedin URL below -");
+                ui.text_edit_singleline(&mut self.url)
+                    .labelled_by(url_label.id);
                 if ui.add(egui::Button::new("Linkedin")).clicked(){
-                    linked_in(&mut self.v);
+                    linked_in(&mut self.url);
                     self.label_text = String::from("LinkedIn selected");
                 }
                 if ui.add(egui::Button::new("ChatGPT")).clicked(){
@@ -57,13 +61,13 @@ impl eframe::App for MyApp {
 
 //prompts functionality
 
-pub fn linked_in(v:&mut Vec<String>) {
+pub fn linked_in(url_ref: &mut String) {
     let mut ctx = ClipboardContext::new().unwrap();
-
-    v.push("https://www.linkedin.com/in/elkan-d-silva-249755217/".to_string());
-
-    ctx.set_contents(v[0].to_owned()).unwrap();
-
+    match ctx.set_contents(url_ref.to_string()) {
+        Ok(_) => {}
+        Err(e) => {println!("{} returned", e)}
+    }
+    println!("{} has been copied.", url_ref);
 }
 
 pub fn chat_gpt(){
